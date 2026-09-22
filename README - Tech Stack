@@ -1,0 +1,14 @@
+# Flow Music - Tech Stack
+
+## Core Framework
+* **Streamlit:** Python-based web framework used to build and deploy the interactive user interface, manage layout grids, tabs, and session state.
+
+## Data Management
+* **Pandas:** Handles data loading, manipulation, and filtering of the master song and content catalog.
+* **OpenPyxl:** Provides Excel file reading support (`flowmusic.xlsx`) for the dataset loader.
+
+## Search & Matching Engine
+* **RapidFuzz:** Powers the real-time, typo-tolerant fuzzy search engine (`fuzz.WRatio`) across song titles, genres, prompts, and interactive spaces.
+
+## Configuration & Environment
+* **Python-dotenv:** Loads local environment variables (boilerplate setup).
