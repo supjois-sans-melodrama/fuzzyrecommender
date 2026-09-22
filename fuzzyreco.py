@@ -27,8 +27,8 @@ with st.sidebar:
     st.markdown("### ⚙️ Settings")
     theme_choice = st.radio(
         "Appearance", 
-        ["Dark Mode", "Light Mode"], 
-        index=1 if st.session_state["theme"] == "Light Mode" else 0
+        ["Light Mode", "Dark Mode"], 
+        index=0 if st.session_state["theme"] == "Light Mode" else 1
     )
     st.session_state["theme"] = theme_choice
 
@@ -51,12 +51,12 @@ btn_hover_bg = "#32374a" if is_dark else "#0f172a"
 btn_hover_text = "#ffffff" if is_dark else "#ffffff"
 btn_hover_border = "#06b6d4" if is_dark else "#0284c7"
 
-# Enclosed Tab Colors
+# Enclosed Tab Colors (High Contrast Adjustments)
 tab_active_bg = "#0ea5e9" if is_dark else "#0284c7"
 tab_active_text = "#ffffff"
-tab_inactive_bg = "#1e293b" if is_dark else "#e2e8f0"
-tab_inactive_text = "#94a3b8" if is_dark else "#334155"
-tab_border_color = "#334155" if is_dark else "#cbd5e1"
+tab_inactive_bg = "#1e293b" if is_dark else "#ffffff"
+tab_inactive_text = "#94a3b8" if is_dark else "#0f172a"
+tab_border_color = "#334155" if is_dark else "#94a3b8"
 
 st.markdown(f"""
     <style>
@@ -124,6 +124,7 @@ st.markdown(f"""
     .stTabs [data-baseweb="tab"][aria-selected="false"],
     div[data-baseweb="tab-list"] button[aria-selected="false"] {{
         background-color: {tab_inactive_bg} !important;
+        border-color: {tab_border_color} !important;
     }}
 
     .stTabs [data-baseweb="tab"][aria-selected="false"] *,
