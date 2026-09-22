@@ -10,7 +10,7 @@ load_dotenv()
 # 1. Page Configuration
 # ------------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Flow Music - Fuzzy Recommender",
+    page_title="Fuzzy Stuff Recommender",
     page_icon="🎵",
     layout="wide",
     initial_sidebar_state="expanded"
