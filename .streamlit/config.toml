@@ -1,0 +1,17 @@
+[server]
+# Maximizes upload size if you allow users to upload custom datasets or audio files
+maxUploadSize = 200
+enableCORS = false
+enableXsrfProtection = true
+
+[browser]
+# Automatically gather usage stats (optional, can be true or false)
+gatherUsageStats = false
+
+[theme]
+# Base fallback theme for Streamlit's native elements
+base = "dark"
+primaryColor = "#0284c7"
+backgroundColor = "#121316"
+secondaryBackgroundColor = "#1a1c23"
+textColor = "#FFFFFF"
