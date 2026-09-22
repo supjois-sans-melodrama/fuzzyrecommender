@@ -17,18 +17,18 @@ st.set_page_config(
 )
 
 # ------------------------------------------------------------------------------
-# 2. State & Theme Management (Default set to Light Mode)
+# 2. State & Theme Management (Default set to Dark Mode)
 # ------------------------------------------------------------------------------
 if "theme" not in st.session_state:
-    st.session_state["theme"] = "Light Mode"
+    st.session_state["theme"] = "Dark Mode"
 
 # Theme Toggle in Sidebar
 with st.sidebar:
     st.markdown("### ⚙️ Settings")
     theme_choice = st.radio(
         "Appearance", 
-        ["Light Mode", "Dark Mode"], 
-        index=0 if st.session_state["theme"] == "Light Mode" else 1
+        ["Dark Mode", "Light Mode"], 
+        index=0 if st.session_state["theme"] == "Dark Mode" else 1
     )
     st.session_state["theme"] = theme_choice
 
@@ -54,9 +54,9 @@ btn_hover_border = "#06b6d4" if is_dark else "#0284c7"
 # Enclosed Tab Colors (High Contrast Adjustments)
 tab_active_bg = "#0ea5e9" if is_dark else "#0284c7"
 tab_active_text = "#ffffff"
-tab_inactive_bg = "#1e293b" if is_dark else "#ffffff"
-tab_inactive_text = "#94a3b8" if is_dark else "#0f172a"
-tab_border_color = "#334155" if is_dark else "#94a3b8"
+tab_inactive_bg = "#1e293b" if is_dark else "#e2e8f0"   # Light gray pill background for light mode
+tab_inactive_text = "#94a3b8" if is_dark else "#0f172a"  # Deep dark text for light mode
+tab_border_color = "#334155" if is_dark else "#cbd5e1"
 
 st.markdown(f"""
     <style>
