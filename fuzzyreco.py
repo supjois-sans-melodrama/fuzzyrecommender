@@ -22,15 +22,9 @@ st.set_page_config(
 if "theme" not in st.session_state:
     st.session_state["theme"] = "Dark Mode"
 
-# Theme Toggle in Sidebar
+# Sidebar Branding at the very top
 with st.sidebar:
-    st.markdown("### ⚙️ Settings")
-    theme_choice = st.radio(
-        "Appearance", 
-        ["Dark Mode", "Light Mode"], 
-        index=0 if st.session_state["theme"] == "Dark Mode" else 1
-    )
-    st.session_state["theme"] = theme_choice
+    st.markdown('<div class="sidebar-brand">🎵 Flow Music</div>', unsafe_allow_html=True)
 
 is_dark = st.session_state["theme"] == "Dark Mode"
 
@@ -41,21 +35,22 @@ subtext_color = "#94a3b8" if is_dark else "#475569"
 card_bg = "#1a1c23" if is_dark else "#ffffff"
 card_border = "#2d3139" if is_dark else "#cbd5e1"
 
+# Sidebar Theme Colors
+sidebar_bg = "#181a20" if is_dark else "#f1f5f9"
+sidebar_text = "#FFFFFF" if is_dark else "#0f172a"
+
 # Button Theme Colors
 btn_bg = "#252836" if is_dark else "#f1f5f9"
 btn_text = "#f8fafc" if is_dark else "#0f172a"
 btn_border = "1px solid #3b4158" if is_dark else "1px solid #cbd5e1"
 
 # Button Hover Theme Colors
-btn_hover_bg = "#32374a" if is_dark else "#0f172a"
-btn_hover_text = "#ffffff" if is_dark else "#ffffff"
+btn_hover_bg = "#32374a" if is_dark else "#e2e8f0"
+btn_hover_text = "#ffffff" if is_dark else "#0f172a"
 btn_hover_border = "#06b6d4" if is_dark else "#0284c7"
 
-# Enclosed Tab Colors (High Contrast Adjustments)
-tab_active_bg = "#0ea5e9" if is_dark else "#0284c7"
-tab_active_text = "#ffffff"
-tab_inactive_bg = "#1e293b" if is_dark else "#e2e8f0"   # Light gray pill background for light mode
-tab_inactive_text = "#94a3b8" if is_dark else "#0f172a"  # Deep dark text for light mode
+# Minimalist Tab Accent Colors
+tab_active_indicator = "#0ea5e9" if is_dark else "#0284c7"
 tab_border_color = "#334155" if is_dark else "#cbd5e1"
 
 st.markdown(f"""
@@ -69,6 +64,29 @@ st.markdown(f"""
         background-color: {bg_color};
         color: {text_color};
     }}
+
+    /* Sidebar Styling & Contrast Fix */
+    section[data-testid="stSidebar"] {{
+        background-color: {sidebar_bg} !important;
+    }}
+    section[data-testid="stSidebar"] * {{
+        color: {sidebar_text} !important;
+    }}
+    
+    .sidebar-brand {{
+        font-size: 1.35rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: {sidebar_text} !important;
+        margin-bottom: 0.75rem;
+        padding-top: 0.2rem;
+    }}
+
+    /* Top Radio Theme Toggle Labels */
+    div[data-testid="stRadio"] label, div[data-testid="stRadio"] p, div[data-testid="stRadio"] span {{
+        color: {text_color} !important;
+    }}
+
     .hero-title {{
         font-size: 3rem;
         font-weight: 800;
@@ -95,77 +113,79 @@ st.markdown(f"""
     }}
 
     /* -------------------------------------------------------------------------
-       ENCLOSED HIGH-CONTRAST TAB BOX STYLING
+       MINIMALIST BORDERLESS & FILL-LESS TABS
        ------------------------------------------------------------------------- */
     .stTabs [data-baseweb="tab-list"],
     div[data-baseweb="tab-list"] {{
-        gap: 12px !important;
-        border-bottom: none !important;
+        gap: 24px !important;
+        border-bottom: 1px solid {tab_border_color} !important;
         margin-bottom: 1.5rem !important;
-        padding: 4px !important;
+        padding: 0px !important;
     }}
 
-    /* Hide default red/color underline indicator */
+    /* Active Tab Bottom Indicator Bar */
     .stTabs [data-baseweb="tab-highlight"],
     div[data-baseweb="tab-highlight"] {{
-        display: none !important;
+        background-color: {tab_active_indicator} !important;
+        height: 3px !important;
+        border-radius: 3px 3px 0 0 !important;
     }}
 
-    /* Enclosed Tab Pill Box - Base Styles */
+    /* Tab Base Styles (Transparent, No Border) */
     .stTabs [data-baseweb="tab"],
     div[data-baseweb="tab-list"] button[data-baseweb="tab"] {{
-        border-radius: 10px !important;
-        padding: 10px 20px !important;
-        border: 1px solid {tab_border_color} !important;
-        transition: all 0.2s ease-in-out !important;
+        background-color: transparent !important;
+        border: none !important;
+        border-radius: 0px !important;
+        padding: 10px 4px !important;
+        transition: color 0.2s ease-in-out !important;
     }}
 
-    /* UNSELECTED INACTIVE TAB BOX */
-    .stTabs [data-baseweb="tab"][aria-selected="false"],
-    div[data-baseweb="tab-list"] button[aria-selected="false"] {{
-        background-color: {tab_inactive_bg} !important;
-        border-color: {tab_border_color} !important;
-    }}
-
+    /* UNSELECTED INACTIVE TAB TEXT */
     .stTabs [data-baseweb="tab"][aria-selected="false"] *,
+    .stTabs [data-baseweb="tab"][aria-selected="false"] div,
+    .stTabs [data-baseweb="tab"][aria-selected="false"] span,
+    .stTabs [data-baseweb="tab"][aria-selected="false"] p,
     div[data-baseweb="tab-list"] button[aria-selected="false"] *,
-    div[data-baseweb="tab-list"] button[aria-selected="false"] p,
+    div[data-baseweb="tab-list"] button[aria-selected="false"] div,
     div[data-baseweb="tab-list"] button[aria-selected="false"] span,
-    div[data-baseweb="tab-list"] button[aria-selected="false"] div {{
-        color: {tab_inactive_text} !important;
-        -webkit-text-fill-color: {tab_inactive_text} !important;
+    div[data-baseweb="tab-list"] button[aria-selected="false"] p {{
+        color: {subtext_color} !important;
+        -webkit-text-fill-color: {subtext_color} !important;
         font-size: 1.05rem !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
     }}
 
-    /* SELECTED ACTIVE TAB BOX */
-    .stTabs [data-baseweb="tab"][aria-selected="true"],
-    div[data-baseweb="tab-list"] button[aria-selected="true"] {{
-        background-color: {tab_active_bg} !important;
-        border-color: {tab_active_bg} !important;
-        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25) !important;
-    }}
-
+    /* SELECTED ACTIVE TAB TEXT */
     .stTabs [data-baseweb="tab"][aria-selected="true"] *,
+    .stTabs [data-baseweb="tab"][aria-selected="true"] div,
+    .stTabs [data-baseweb="tab"][aria-selected="true"] span,
+    .stTabs [data-baseweb="tab"][aria-selected="true"] p,
     div[data-baseweb="tab-list"] button[aria-selected="true"] *,
-    div[data-baseweb="tab-list"] button[aria-selected="true"] p,
+    div[data-baseweb="tab-list"] button[aria-selected="true"] div,
     div[data-baseweb="tab-list"] button[aria-selected="true"] span,
-    div[data-baseweb="tab-list"] button[aria-selected="true"] div {{
-        color: {tab_active_text} !important;
-        -webkit-text-fill-color: {tab_active_text} !important;
+    div[data-baseweb="tab-list"] button[aria-selected="true"] p {{
+        color: {text_color} !important;
+        -webkit-text-fill-color: {text_color} !important;
         font-size: 1.05rem !important;
         font-weight: 700 !important;
     }}
 
     /* Tab Hover Effect */
-    .stTabs [data-baseweb="tab"][aria-selected="false"]:hover {{
-        border-color: {tab_active_bg} !important;
-        transform: translateY(-1px);
+    .stTabs [data-baseweb="tab"][aria-selected="false"]:hover *,
+    div[data-baseweb="tab-list"] button[aria-selected="false"]:hover * {{
+        color: {text_color} !important;
+        -webkit-text-fill-color: {text_color} !important;
     }}
     
     /* -------------------------------------------------------------------------
-       CARDS WITH SPACING
+       CARDS WITH FIXED MAXIMUM WIDTH TO PREVENT OVER-STRETCHING
        ------------------------------------------------------------------------- */
+    .flow-card-container {{
+        max-width: 310px;
+        width: 100%;
+    }}
+
     .flow-card {{
         background: {card_bg};
         border: 1px solid {card_border};
@@ -385,7 +405,6 @@ def get_filtered_spaces(query="", count=4):
 # ------------------------------------------------------------------------------
 # 4. Sidebar Navigation
 # ------------------------------------------------------------------------------
-st.sidebar.markdown("### 🎵 Flow Music")
 st.sidebar.button("+ New session", use_container_width=True)
 st.sidebar.markdown("---")
 st.sidebar.caption("QUICK SPACES")
@@ -399,15 +418,39 @@ if "search_query_val" not in st.session_state:
     st.session_state["search_query_val"] = ""
 
 # ------------------------------------------------------------------------------
-# 5. Dynamic Card Renderer
+# Top App Area: Theme Toggle & Controls Header
+# ------------------------------------------------------------------------------
+top_col1, top_col2 = st.columns([6, 2])
+with top_col2:
+    theme_options = ["Dark Mode", "Light Mode"]
+    current_index = 0 if st.session_state["theme"] == "Dark Mode" else 1
+    theme_choice = st.radio(
+        "Appearance", 
+        theme_options, 
+        index=current_index,
+        horizontal=True,
+        label_visibility="collapsed"
+    )
+    if theme_choice != st.session_state["theme"]:
+        st.session_state["theme"] = theme_choice
+        st.rerun()
+
+# ------------------------------------------------------------------------------
+# 5. Dynamic Card Renderer (Fixed width for single-item rows)
 # ------------------------------------------------------------------------------
 def render_cards(title, cat_key, card_list, mode_name, card_type="standard"):
+    if not card_list:
+        return
     st.markdown(f'<div class="section-title">{title}</div>', unsafe_allow_html=True)
-    cols = st.columns(len(card_list))
+    
+    # Always create a 4-column grid layout structure to prevent single items from stretching full-width
+    cols = st.columns(4)
 
     for idx, c in enumerate(card_list):
         cid = c["id"]
-        with cols[idx]:
+        col_idx = idx % 4
+        with cols[col_idx]:
+            st.markdown('<div class="flow-card-container">', unsafe_allow_html=True)
             if card_type == "video":
                 st.markdown(f"""
                     <div class="video-card">
@@ -465,6 +508,7 @@ def render_cards(title, cat_key, card_list, mode_name, card_type="standard"):
                     st.session_state["disliked_ids"].add(cid)
                     st.toast(f"Removed '{c['title']}'!")
                     st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
 
 # ------------------------------------------------------------------------------
 # 6. Main Surface Tabs
