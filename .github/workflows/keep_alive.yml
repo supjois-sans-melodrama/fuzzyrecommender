@@ -2,18 +2,15 @@ name: Keep Streamlit App Awake
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight
+    - cron: '0 */4 * * *' # Runs every 4 hours 
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
-  keep_alive:
+  ping_app:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Push empty commit
+      - name: Send HTTP request to Streamlit app
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@://github.com"
-          git commit --allow-empty -m "Keep-alive ping to reset Streamlit idle timer"
-          git push
+          curl -I https://fuzzyrecommender.streamlit.app/
